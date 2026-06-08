@@ -1,0 +1,7 @@
+quantity,count,comment
+Rows in genetic-distance table,141.0,
+Unique unordered species pairs,133.0,Duplicates are identical for eight pairs
+Rows with missing K2P,23.0,
+Rows with nonmissing K2P,118.0,
+Median nonmissing K2P,0.0121,
+Maximum nonmissing K2P,0.2914,

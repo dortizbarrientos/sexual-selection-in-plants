@@ -1,0 +1,5 @@
+x,y,n,pearson,spearman
+RI,K2P_Distance,87,0.206,0.322
+RI,mean_log10_ovules,87,-0.14,-0.123
+RI,abs_log10_ovule_difference,87,-0.116,-0.214
+K2P_Distance,abs_log10_ovule_difference,87,-0.166,-0.188

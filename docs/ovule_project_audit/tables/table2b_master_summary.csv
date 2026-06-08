@@ -1,0 +1,8 @@
+quantity,count
+Rows in master table,5496
+Rows marked table1 == yes,1208
+Rows marked for removal,832
+Nonremoved rows,4664
+Nonremoved rows with ovule number,4206
+Unique nonremoved species names,3779
+Unique nonremoved table1 species names with number,711

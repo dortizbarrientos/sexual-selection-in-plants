@@ -1,0 +1,4 @@
+subset,rows,both_species_in_Table2,both_ovules_numeric,K2P_row_present,K2P_nonmissing,both_ovules_and_K2P,both_ovules_K2P_conf_le_3,both_ovules_K2P_conf_le_2
+All Table1 rows,578,577,448,141,118,94,93,61
+Retained Table1 rows,560,560,434,133,110,87,86,57
+Retained PI rows,133,133,105,133,110,87,86,57

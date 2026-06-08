@@ -1,0 +1,15 @@
+dataset,column,missing,missing_percent
+Genetic distances,K2P_Distance,23,16.3
+Table1,sp2_hybrid_proportion,559,96.7
+Table1,sp1_hybrid_proportion,556,96.2
+Table1,PI_name,437,75.6
+Table1,interspecific_value_sp2_sp1,145,25.1
+Table1,intraspecific_value_sp2,121,20.9
+Table1,interspecific_value_sp1_sp2,87,15.1
+Table1,intraspecific_value_sp1,73,12.6
+Table2,ovule_number,97,23.8
+Table2b,Remove,4664,84.9
+Table2b,number,468,8.5
+Table2b,family,11,0.2
+Table2b,genus,11,0.2
+Table2b,level,11,0.2

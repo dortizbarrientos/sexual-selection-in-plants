@@ -1,0 +1,32 @@
+dataset,column,rows,missing,missing_fraction,missing_percent
+Genetic distances,K2P_Distance,141,23,0.16312056737588654,16.3
+Genetic distances,Species_1,141,0,0.0,0.0
+Genetic distances,Species_2,141,0,0.0,0.0
+Table1,sp2_hybrid_proportion,578,559,0.967128027681661,96.7
+Table1,sp1_hybrid_proportion,578,556,0.9619377162629758,96.2
+Table1,PI_name,578,437,0.7560553633217993,75.6
+Table1,interspecific_value_sp2_sp1,578,145,0.2508650519031142,25.1
+Table1,intraspecific_value_sp2,578,121,0.2093425605536332,20.9
+Table1,interspecific_value_sp1_sp2,578,87,0.15051903114186851,15.1
+Table1,intraspecific_value_sp1,578,73,0.12629757785467127,12.6
+Table1,family,578,0,0.0,0.0
+Table1,genus,578,0,0.0,0.0
+Table1,species1,578,0,0.0,0.0
+Table1,species2,578,0,0.0,0.0
+Table1,duplicate,578,0,0.0,0.0
+Table1,remove,578,0,0.0,0.0
+Table1,RI,578,0,0.0,0.0
+Table1,measure,578,0,0.0,0.0
+Table2,ovule_number,408,97,0.23774509803921567,23.8
+Table2,genus,408,0,0.0,0.0
+Table2,species,408,0,0.0,0.0
+Table2,confidence,408,0,0.0,0.0
+Table2,life_history,408,0,0.0,0.0
+Table2,mating_system,408,0,0.0,0.0
+Table2b,Remove,5496,4664,0.8486171761280932,84.9
+Table2b,number,5496,468,0.0851528384279476,8.5
+Table2b,family,5496,11,0.0020014556040756915,0.2
+Table2b,genus,5496,11,0.0020014556040756915,0.2
+Table2b,level,5496,11,0.0020014556040756915,0.2
+Table2b,table1,5496,0,0.0,0.0
+Table2b,species,5496,0,0.0,0.0

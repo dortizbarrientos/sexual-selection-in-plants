@@ -1,0 +1,8 @@
+Column names	Column description
+family	The family of the species 
+genus	The genus of the species 
+table1	Whether or not the species is found in Table 1
+species	The species being estimated, where sp. is used for an unknown individual species and spp. used for all the species in a genus
+level	Whether the ovule number estimate is based on information about the species, genus, or family
+number	Best estimate of the ovule number for the species
+Remove	Whether or not the data should be removed. Removal of data is mostly because of duplicate values through citation, but occasionally a value is removed because it appears to be an error (see google sheet for detailed descriptions)

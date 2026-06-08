@@ -1,0 +1,828 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{enumitem}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!50!black,
+  citecolor=blue!50!black,
+  urlcolor=blue!50!black
+}
+
+\onehalfspacing
+
+\newcommand{\Peff}{P_{\mathrm{eff}}}
+\newcommand{\Rpre}{R^{\mathrm{pre}}}
+\newcommand{\Rpost}{R^{\mathrm{post}}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\argmax}{\operatorname*{arg\,max}}
+\newcommand{\logit}{\operatorname{logit}}
+\newcommand{\Normal}{\mathcal{N}}
+
+\title{An ovule-gated model of pollen competition and passenger reproductive isolation}
+\author{Daniel Ortiz-Barrientos\\
+\small Working theory note -- provisional framework}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Reproductive isolation is often treated as a quantity that accumulates with time since divergence. That view is useful for many postzygotic barriers, but it may be incomplete for post-pollination prezygotic isolation in flowering plants, where pollen grains are filtered by a living maternal structure. This note develops a simple model in which the intensity of pollen competition depends on the ratio of effective pollen load to ovule number. When effective pollen load scales sublinearly with ovule number, few-ovule lineages experience stronger competition among pollen grains than many-ovule lineages. This strengthens selection on pollen performance and favours stricter maternal filtering, because the cost of rejecting pollen is lower when pollen is abundant relative to ovules. Reproductive isolation then arises as a passenger of the contemporary reproductive state rather than as a direct target of selection or a simple clock-like consequence of divergence. The clearest prediction is directional: in reciprocal crosses, prezygotic isolation should be stronger when the high-competition lineage acts as the maternal parent. Postzygotic isolation, in contrast, should track divergence time, genetic distance, and accumulated incompatibility load more closely. The note derives the model, lists empirical predictions, describes ideal and missing-data scenarios, and proposes a simulation protocol for testing when the model is recoverable under different genetic architectures and phylogenetic sampling designs.
+\end{abstract}
+
+\section{Background}
+
+Most comparative studies of reproductive isolation begin with a time-like intuition. Lineages diverge, genetic differences accumulate, and reproductive isolation increases as a consequence. That intuition has been productive, especially for postzygotic barriers such as hybrid inviability, hybrid sterility, hybrid breakdown, and Dobzhansky--Muller incompatibilities. It is less obviously sufficient for post-pollination prezygotic isolation in flowering plants, where reproductive success is filtered through a living maternal structure: the stigma, style, ovary, ovules, and the molecular interactions that connect them.
+
+In flowering plants, the post-pollination phase is not a passive conduit from pollen deposition to fertilisation. Pollen grains hydrate, germinate, grow pollen tubes, interact with maternal tissues, respond to transmitting-tract environments, navigate towards ovules, and compete for access to embryo sacs. Pollen--pistil interactions can therefore contribute to reproductive isolation through active pollen rejection, passive molecular mismatch, stigma-level barriers, style-level barriers, ovule-guidance failure, or failure of sperm release \citep{Baack2015,Wang2023}. The pistil can also modulate pollen performance in ways that resemble cryptic female choice or sexual conflict, because pollen performance is expressed within maternal tissue \citep{LankinenGreen2015,Lora2016}.
+
+This creates a conceptual opening. Plant reproductive isolation can arise from traits that are under ordinary contemporary selection within species. The same maternal tissues that promote conspecific fertilisation can reject self pollen, heterospecific pollen, poor-quality pollen, or pollen that fails to match the local reproductive environment. Similarly, the same male traits that improve pollen competitive ability within a species may reduce compatibility with other lineages if they alter pollen-tube growth, pollen--style signalling, pollen--ovule targeting, or molecular recognition. This note formalises the idea that post-pollination prezygotic isolation may be a transient, state-dependent consequence of the reproductive arena.
+
+The core claim is not that few ovules directly cause reproductive isolation. The stronger claim is that few ovules can change the intensity of pollen competition. When many pollen grains compete for a small number of ovules, selection among pollen grains becomes stronger, and maternal filtering can become stricter because the cost of rejecting some pollen is lower. Under this regime, prezygotic reproductive isolation may arise as a passenger of selection on pollen performance and maternal filtering, rather than as a direct target of speciation.
+
+\section{Motivation}
+
+Each ovary contains a finite number of ovules. Let that number be \(O\). A flower receives some effective pollen load, \(\Peff\), meaning the subset of pollen grains that enter the relevant competitive arena. This is not necessarily the total pollen produced by the plant, nor even the total pollen deposited on the stigma. It is the pollen that arrives at the right time, remains viable, germinates, enters the pollen-tube pathway, and can plausibly compete for fertilisation.
+
+The central state variable is the ratio
+\begin{equation}
+K = \frac{\Peff}{O}.
+\label{eq:K}
+\end{equation}
+When \(K \leq 1\), there are no more effective pollen grains than available ovules. Fertilisation may still involve physiological filtering, but competition among pollen grains for ovules is relatively weak. When \(K>1\), more effective pollen grains compete than there are ovules. Some pollen grains must lose. Under this condition, pollen performance and maternal filtering become stronger targets of selection.
+
+The important refinement is that pollen load does not need to increase linearly with ovule number. Suppose effective pollen load scales with ovule number as
+\begin{equation}
+\Peff = cO^{\alpha},
+\label{eq:pollen_scaling}
+\end{equation}
+where \(c>0\) is a scaling constant and \(\alpha\) is the allometric exponent describing how effective pollen load changes with ovule number. Combining equations \eqref{eq:K} and \eqref{eq:pollen_scaling} gives
+\begin{equation}
+K = cO^{\alpha-1}.
+\label{eq:K_scaling}
+\end{equation}
+Taking logs,
+\begin{equation}
+\log K = \log c + (\alpha-1)\log O.
+\end{equation}
+Thus,
+\begin{equation}
+\frac{\partial \log K}{\partial \log O} = \alpha - 1.
+\label{eq:elasticity}
+\end{equation}
+If \(\alpha<1\), then \(K\) declines as ovule number increases. Few-ovule lineages experience stronger pollen competition even if many-ovule lineages receive more pollen in absolute terms. If \(\alpha=1\), ovule number does not change the average pollen-to-ovule ratio. If \(\alpha>1\), the prediction reverses.
+
+Direct pollen-load data would allow direct estimation of \(\alpha\), but the theory should not depend on any single unpublished dataset. If direct pollen-load data are unavailable, cannot be used, or are measured at the wrong biological scale, \(\Peff\), \(c\), \(\alpha\), and the effective deposition fraction should be treated as uncertain quantities. The empirical question then becomes whether the model's qualitative predictions are robust across plausible values.
+
+\section{Ecological layer: from ovules and pollen production to competition}
+
+For lineage \(i\), define
+\begin{align}
+O_i &= \text{number of ovules per ovary}, \\
+A_i &= \text{pollen production per relevant reproductive unit}, \\
+\psi_i &= \text{effective deposition fraction}, \\
+P_i &= \Peff{}_{i} = \psi_i A_i, \\
+K_i &= \frac{P_i}{O_i}.
+\end{align}
+The term \(\psi_i\) compresses several biological processes:
+\begin{equation}
+\psi_i = \delta_i\gamma_i\tau_i,
+\label{eq:psi}
+\end{equation}
+where \(\delta_i\) is the fraction of pollen produced that reaches a focal stigma, \(\gamma_i\) is the fraction of deposited pollen that germinates or enters the effective pollen-tube pool, and \(\tau_i\) captures temporal overlap among pollen grains competing for the same ovules. A value such as \(\delta \approx 0.02\) can be used as a central sensitivity value, but it should not be treated as a universal constant. It is a calibration parameter.
+
+At the flower level, pollen deposition should be stochastic. Let \(P_{if}\) be the effective pollen load on flower \(f\) of lineage \(i\). A useful starting model is
+\begin{equation}
+P_{if} \sim \operatorname{NegBinomial}(\mu_i,\theta_P),
+\label{eq:nb_pollen}
+\end{equation}
+where \(\mu_i\) is the mean and \(\theta_P\) controls overdispersion. The negative binomial is preferable to a Poisson because pollen deposition is likely to be clumped: some flowers receive little pollen, while others receive large loads.
+
+The flower-level competition ratio is
+\begin{equation}
+K_{if} = \frac{P_{if}}{O_i}.
+\end{equation}
+A useful summary of the opportunity for pollen competition is
+\begin{equation}
+\Omega_i = \E_f\left[\frac{(P_{if}-O_i)_+}{P_{if}}\right],
+\label{eq:omega}
+\end{equation}
+where
+\begin{equation}
+(x)_+ = 
+\begin{cases}
+x, & x>0, \\
+0, & x\leq 0.
+\end{cases}
+\end{equation}
+This index is zero when pollen load never exceeds ovule number, and it increases as a larger fraction of pollen grains lose access to ovules.
+
+If we use the sublinear scaling model,
+\begin{equation}
+\mu_i = cO_i^{\alpha},
+\end{equation}
+then
+\begin{equation}
+K_i = cO_i^{\alpha-1}.
+\end{equation}
+The threshold ovule number at which average competition changes from weak to strong is found by setting \(K_i=1\):
+\begin{equation}
+1 = cO^{\alpha-1}.
+\end{equation}
+Solving for \(O\),
+\begin{equation}
+O^* = c^{1/(1-\alpha)}.
+\label{eq:threshold_simple}
+\end{equation}
+If we include the deposition fraction explicitly,
+\begin{equation}
+\mu_i = \psi cO_i^{\alpha},
+\end{equation}
+then
+\begin{equation}
+K_i = \psi cO_i^{\alpha-1},
+\end{equation}
+so
+\begin{equation}
+O^* = (\psi c)^{1/(1-\alpha)}.
+\label{eq:threshold_psi}
+\end{equation}
+There is therefore no universal ``few-ovule threshold''. The threshold depends on pollination ecology, pollen production, pollen deposition, germination, timing, and the scaling exponent \(\alpha\).
+
+\section{Pollen competition layer: selection among pollen grains}
+
+Consider a flower with \(P\) effective pollen grains and \(O\) ovules. Each pollen grain has a competitive performance value \(z\), representing a composite of germination rate, pollen-tube growth rate, ability to traverse the style, response to maternal tissues, and ovule-targeting ability. Assume, for the simplest derivation, that
+\begin{equation}
+z \sim \Normal(\bar{z},\sigma_z^2).
+\end{equation}
+If \(P\leq O\), every viable pollen grain can potentially fertilise an ovule. Competition is weak, so we set the truncation-selection component to zero:
+\begin{equation}
+S_z(K)=0 \quad \text{for } K\leq 1.
+\end{equation}
+If \(P>O\), only the top fraction
+\begin{equation}
+q = \frac{O}{P} = \frac{1}{K}
+\end{equation}
+of pollen grains can fertilise ovules. Let
+\begin{equation}
+t = \Phi^{-1}(1-q),
+\end{equation}
+where \(\Phi^{-1}\) is the inverse standard normal cumulative distribution. The mean of the successful upper tail exceeds the population mean by
+\begin{equation}
+S_z(K) = \sigma_z \frac{\phi(t)}{q},
+\end{equation}
+where \(\phi(t)\) is the standard normal density. Thus,
+\begin{equation}
+S_z(K) = 
+\begin{cases}
+0, & K\leq 1,\\[6pt]
+\sigma_z
+\dfrac{
+\phi\left[\Phi^{-1}\left(1-\frac{1}{K}\right)\right]
+}{1/K}, & K>1.
+\end{cases}
+\label{eq:truncation_selection}
+\end{equation}
+The selection gradient on pollen performance is approximately
+\begin{equation}
+\beta_z(K) = \frac{S_z(K)}{\sigma_z^2}.
+\end{equation}
+Now consider a pollen-expressed allele \(\ell\) with effect \(a_\ell\) on pollen performance. Its effective selection coefficient through male function can be approximated as
+\begin{equation}
+s_{\ell}^{(m)}(K) = a_\ell \beta_z(K).
+\end{equation}
+Because many plant genes are transmitted through both male and female functions, the net selection coefficient at the sporophytic level may be reduced. We write
+\begin{equation}
+s_{\ell}^{\mathrm{eff}}(K) = \kappa a_\ell \beta_z(K),
+\label{eq:seff}
+\end{equation}
+where \(0<\kappa\leq 1\) maps pollen-phase selection into whole-organism allele-frequency change. If the allele affects only male function in a hermaphroditic plant, \(\kappa\) may be close to one half. If the allele also affects female function, \(\kappa\) may be higher or lower depending on the direction of that effect.
+
+A first-order allele-frequency recursion is
+\begin{equation}
+\Delta p_\ell \approx p_\ell(1-p_\ell)s_{\ell}^{\mathrm{eff}}(K).
+\label{eq:allele_change}
+\end{equation}
+Under the sublinear pollen-load model,
+\begin{equation}
+\Delta p_\ell \approx p_\ell(1-p_\ell)\kappa a_\ell \beta_z\left(cO^{\alpha-1}\right).
+\end{equation}
+When \(\alpha<1\), this predicts stronger pollen-phase allele-frequency change in few-ovule lineages.
+
+The expected rate of successful sweeps at pollen-performance loci can be written abstractly as
+\begin{equation}
+\Lambda_i = 2N_{e,i}\mu_b u\left(s_{\ell}^{\mathrm{eff}}(K_i)\right),
+\label{eq:sweep_rate}
+\end{equation}
+where \(N_{e,i}\) is effective population size, \(\mu_b\) is the beneficial mutation rate for pollen-performance alleles, and \(u(s)\) is the fixation probability of a beneficial allele with selection coefficient \(s\). The exact expression for \(u(s)\) depends on dominance, ploidy, demography, and whether selection acts mainly through haploid pollen or diploid sporophytes. The important monotonic prediction is
+\begin{equation}
+\frac{\partial \Lambda_i}{\partial K_i} > 0
+\end{equation}
+provided beneficial alleles affecting pollen performance are available.
+
+\section{Maternal filtering layer: why high \texorpdfstring{\(K\)}{K} favours stricter pistils}
+
+Pollen competition alone gives stronger selection on male function. To generate directional prezygotic reproductive isolation, we also need the maternal side. Let \(F_i\) be the strictness of the maternal filter in lineage \(i\). A higher value of \(F_i\) means that the stigma, style, ovary, or ovule environment is more selective. It may reject or slow pollen that lacks the right molecular signals, grows too slowly, grows at the wrong time, fails to respond to guidance cues, or mismatches the maternal tissue.
+
+A strict filter has two opposing effects. First, it can increase offspring quality or reduce fertilisation by unsuitable pollen. Let this benefit be
+\begin{equation}
+Q(F)=1+b(1-e^{-\lambda F}),
+\end{equation}
+where \(b>0\) is the maximum benefit of filtering and \(\lambda>0\) determines how quickly the benefit saturates.
+
+Second, filtering can reduce seed set if too much pollen is rejected. If the accepted fraction of pollen is approximately \(e^{-F}\), then the accepted pollen-to-ovule ratio is
+\begin{equation}
+Ke^{-F}.
+\end{equation}
+A simple saturating seed-set function is
+\begin{equation}
+S(K,F)=1-e^{-Ke^{-F}}.
+\end{equation}
+When \(K\) is small, increasing \(F\) sharply reduces seed set. When \(K\) is large, many pollen grains remain even after filtering, so the seed-set cost of filtering is weaker.
+
+Define maternal fitness as
+\begin{equation}
+W_f(F,K)=S(K,F)Q(F)e^{-c_FF^2/2},
+\label{eq:maternal_fitness}
+\end{equation}
+where \(c_FF^2/2\) is a direct physiological or developmental cost of maintaining a strict filter. Taking logs,
+\begin{equation}
+\log W_f(F,K)=\log S(K,F)+\log Q(F)-\frac{c_FF^2}{2}.
+\end{equation}
+The evolved filter strictness is
+\begin{equation}
+F^*(K)=\argmax_F \log W_f(F,K).
+\label{eq:Fstar}
+\end{equation}
+The first-order condition is
+\begin{equation}
+-
+\frac{Ke^{-F}e^{-Ke^{-F}}}{1-e^{-Ke^{-F}}}
++
+\frac{b\lambda e^{-\lambda F}}{1+b(1-e^{-\lambda F})}
+-
+c_FF
+=0.
+\label{eq:Fstar_condition}
+\end{equation}
+The first term is the marginal seed-set cost of filtering. The second term is the marginal quality benefit of filtering. The third term is the direct cost of filter strictness.
+
+The qualitative result is
+\begin{equation}
+\frac{dF^*}{dK}>0
+\label{eq:F_increases_with_K}
+\end{equation}
+over the biologically relevant range. When \(K\) is low, rejecting pollen risks unfertilised ovules. When \(K\) is high, there is surplus pollen, so the maternal plant can reject more pollen without losing seed set. High \(K\) therefore favours stricter maternal filtering.
+
+\section{Prezygotic reproductive isolation as a passenger}
+
+Let \(D_{ij}\) be the pollen--pistil mismatch between lineages \(i\) and \(j\). For now, assume it is symmetric:
+\begin{equation}
+D_{ij}=D_{ji}.
+\end{equation}
+This mismatch could arise from molecular recognition differences, pollen-tube growth differences, style-length mismatch, ovule-guidance differences, or any combination of post-pollination prezygotic traits.
+
+Let the compatibility of pollen from lineage \(j\) on maternal tissue from lineage \(i\) be
+\begin{equation}
+C^{\mathrm{pre}}_{i\leftarrow j}=e^{-F_iD_{ij}}.
+\end{equation}
+Then prezygotic reproductive isolation is
+\begin{equation}
+\Rpre_{i\leftarrow j}=1-C^{\mathrm{pre}}_{i\leftarrow j},
+\end{equation}
+so
+\begin{equation}
+\Rpre_{i\leftarrow j}=1-e^{-F_iD_{ij}}.
+\label{eq:Rpre}
+\end{equation}
+The reciprocal cross is
+\begin{equation}
+\Rpre_{j\leftarrow i}=1-e^{-F_jD_{ij}}.
+\end{equation}
+The reciprocal asymmetry is
+\begin{equation}
+A_{ij}=\Rpre_{i\leftarrow j}-\Rpre_{j\leftarrow i}.
+\end{equation}
+Substituting,
+\begin{equation}
+A_{ij}=e^{-F_jD_{ij}}-e^{-F_iD_{ij}}.
+\label{eq:asymmetry}
+\end{equation}
+If \(F_i>F_j\), then \(e^{-F_iD_{ij}}<e^{-F_jD_{ij}}\), and therefore \(A_{ij}>0\). Because \(F^*(K)\) increases with \(K\), the prediction becomes
+\begin{equation}
+A_{ij}>0 \quad \text{when} \quad K_i>K_j.
+\label{eq:asymmetry_prediction}
+\end{equation}
+For small mismatch,
+\begin{equation}
+e^{-F_iD_{ij}} \approx 1-F_iD_{ij},
+\end{equation}
+so
+\begin{equation}
+\Rpre_{i\leftarrow j} \approx F_iD_{ij},
+\end{equation}
+and
+\begin{equation}
+A_{ij} \approx D_{ij}(F_i-F_j).
+\label{eq:small_mismatch_asymmetry}
+\end{equation}
+Since \(F_i-F_j\) is driven by \(K_i-K_j\),
+\begin{equation}
+A_{ij} \approx D_{ij}\left[f(K_i)-f(K_j)\right].
+\end{equation}
+This is the mathematical statement of the passenger model. Reproductive isolation is not the direct object of selection. Selection favours pollen performance and maternal filtering under high \(K\). Reproductive isolation appears because those evolved filters and pollen traits no longer interact smoothly with other lineages.
+
+\section{Postzygotic reproductive isolation as the contrast model}
+
+Postzygotic isolation should be modelled separately. Let \(B_{ij}\) be the accumulated Dobzhansky--Muller incompatibility load between lineages \(i\) and \(j\). A simple model is
+\begin{equation}
+B_{ij}\sim \operatorname{Poisson}(\lambda_B T_{ij}^{\gamma}),
+\label{eq:bdm_load}
+\end{equation}
+where \(T_{ij}\) is divergence time and \(\gamma=1\) gives linear accumulation, while \(\gamma=2\) gives a snowball-like accumulation. Let postzygotic reproductive isolation be
+\begin{equation}
+\Rpost_{ij}=1-e^{-hB_{ij}},
+\label{eq:Rpost}
+\end{equation}
+where \(h>0\) converts incompatibility load into loss of hybrid viability or fertility.
+
+This barrier is mostly symmetric:
+\begin{equation}
+\Rpost_{ij}\approx \Rpost_{ji}.
+\end{equation}
+There can be exceptions, including cytoplasmic effects, endosperm imbalance, and parent-of-origin effects, but the baseline expectation is that postzygotic RI should track divergence time or genetic distance more strongly than maternal \(K\). The key decoupling is therefore
+\begin{equation}
+\Rpre_{i\leftarrow j}\sim F_iD_{ij}\sim f(K_i)D_{ij},
+\end{equation}
+whereas
+\begin{equation}
+\Rpost_{ij}\sim g(T_{ij},G_{ij},B_{ij}),
+\end{equation}
+where \(G_{ij}\) is genetic distance. This contrast is essential. The model becomes most convincing if prezygotic RI tracks maternal competition state, while postzygotic RI tracks divergence.
+
+\section{Genetic architectures linking competition, sweeps, and RI}
+
+The model can be explored under three main genetic architectures.
+
+In the independent architecture, pollen-performance loci and pollen--pistil compatibility loci are unlinked and have independent effects. High \(K\) produces sweeps at pollen-performance loci, but reproductive isolation evolves only if those performance changes also create mismatch indirectly, or if maternal filtering evolves in parallel. This is the most conservative architecture. It can generate adaptation without much RI.
+
+In the linked architecture, pollen-performance loci are physically linked to compatibility loci. A sweep caused by pollen competition can drag nearby compatibility alleles with it. The strength of hitchhiking should decline with recombination. A simple approximation is
+\begin{equation}
+H(r,s)=\frac{s}{s+r},
+\label{eq:hitchhiking}
+\end{equation}
+where \(s\) is the selection coefficient of the swept allele and \(r\) is recombination between the selected locus and the compatibility locus. When \(r\ll s\), hitchhiking is strong. When \(r\gg s\), hitchhiking is weak.
+
+In the pleiotropic architecture, the same allele improves pollen success within a lineage and changes compatibility with other lineages. A beneficial allele \(\ell\) has two effects:
+\begin{align}
+a_\ell &= \text{effect on pollen performance},\\
+d_\ell &= \text{effect on pollen--pistil mismatch}.
+\end{align}
+If the allele sweeps under high \(K\), it changes both pollen performance and interlineage compatibility. The mismatch between lineages then accumulates as
+\begin{equation}
+D_{ij}=\sum_\ell d_\ell I\left[\text{allele }\ell\text{ differs between }i\text{ and }j\right].
+\end{equation}
+The expected ordering of RI generation is
+\begin{equation}
+\text{pleiotropy} > \text{linkage} > \text{independence}.
+\end{equation}
+This is not because pleiotropy is necessarily more common, but because it gives the shortest causal path from pollen competition to reproductive isolation.
+
+\section{Main consequences}
+
+The first consequence is that ovule number should not be treated as the causal variable by itself. The causal variable is \(K=\Peff/O\). Ovule number matters because, under sublinear pollen-load scaling, it changes \(K\). If \(\alpha<1\), few-ovule lineages should have higher \(K\). If \(\alpha=1\), ovule number should not affect \(K\). If \(\alpha>1\), the prediction reverses.
+
+The second consequence is that pollen competition should increase the rate of allele-frequency change at pollen-performance loci:
+\begin{equation}
+\frac{\partial \Delta p_\ell}{\partial K}>0.
+\end{equation}
+This predicts more sweeps, stronger allele-frequency shifts, or stronger molecular signatures of selection in reproductive genes in high-\(K\) lineages, especially genes expressed in pollen, pollen tubes, stigmas, styles, ovaries, and ovules.
+
+The third consequence is that maternal filter strictness should increase with competition:
+\begin{equation}
+\frac{dF^*}{dK}>0.
+\end{equation}
+That gives the maternal asymmetry. High-\(K\) lineages should be more selective as maternal parents.
+
+The fourth consequence is that reciprocal-cross asymmetry should follow competition-state asymmetry:
+\begin{equation}
+\operatorname{sign}(A_{ij})=\operatorname{sign}(K_i-K_j),
+\end{equation}
+provided there is nonzero mismatch \(D_{ij}\).
+
+The fifth consequence is that prezygotic and postzygotic barriers should decouple. Prezygotic RI should depend strongly on maternal \(K\), while postzygotic RI should depend more strongly on divergence time, genetic distance, and accumulated incompatibility load.
+
+\section{Predictions}
+
+The model makes several testable predictions.
+
+First, effective pollen competition should scale negatively with ovule number when pollen load scales sublinearly:
+\begin{equation}
+\alpha<1 \Rightarrow \frac{\partial K}{\partial O}<0.
+\end{equation}
+This can be tested directly with pollen-load data, or indirectly through sensitivity analysis if pollen-load data are unavailable.
+
+Second, few-ovule or high-\(K\) lineages should show stronger signatures of pollen competition: higher variance in male reproductive success, stronger pollen-tube sorting, stronger paternity skew, stronger selection on pollen performance, or more frequent sweep-like patterns in reproductive genes.
+
+Third, reciprocal crosses should be asymmetric in a predictable direction. If lineage \(i\) has higher \(K\) than lineage \(j\), then
+\begin{equation}
+\Rpre_{i\leftarrow j}>\Rpre_{j\leftarrow i}.
+\end{equation}
+That is, the high-\(K\) lineage should reject heterospecific pollen more strongly when it is the maternal parent.
+
+Fourth, prezygotic RI should be better predicted by maternal \(K\) than by genetic distance alone:
+\begin{equation}
+\Rpre_{i\leftarrow j}\sim K_i + D_{ij},
+\end{equation}
+whereas
+\begin{equation}
+\Rpost_{ij}\sim G_{ij} \text{ or } T_{ij}.
+\end{equation}
+
+Fifth, the association between high \(K\), sweeps, and RI should depend on genetic architecture:
+\begin{equation}
+\text{pleiotropy strongest}, \quad \text{linkage intermediate}, \quad \text{independence weakest}.
+\end{equation}
+
+Sixth, transitions into few-ovule/high-\(K\) states should regenerate prezygotic RI even among lineages that are not exceptionally old. Transitions out of high-\(K\) states may relax maternal filtering, although molecular incompatibilities may persist as historical residue.
+
+Seventh, across a phylogeny, independent transitions to high \(K\) should repeatedly coincide with stronger post-pollination prezygotic isolation, especially in maternal direction. This is the macroevolutionary convergence prediction.
+
+\section{Ideal data}
+
+The ideal dataset has four levels.
+
+At the species or lineage level, we would want ovule number per ovary, pollen production per flower, pollen production per plant, flower number, stigma size, style length, stigma type, mating system, pollination syndrome, flowering phenology, and estimates of selfing or outcrossing.
+
+At the pollen-load level, we would want natural pollen load per stigma, pollen-load variance among flowers, donor diversity per stigma, timing of pollen arrival, pollen viability, pollen germination, and pollen-tube entry. These data would allow estimation of \(\Peff\) rather than merely assuming it.
+
+At the crossing level, we would want reciprocal crosses for each pair, \(i\leftarrow j\) and \(j\leftarrow i\). For each cross, the best data would be raw counts: number of flowers crossed, pollen dose, ovules per ovary, fruit set, seeds per fruit, aborted ovules, pollen germination, pollen-tube growth, pollen tubes reaching the ovary, ovule targeting, seed germination, F1 viability, F1 fertility, and F2 or backcross fertility if available. Raw denominators matter. A cross with one seed from two ovules and a cross with 100 seeds from 200 ovules have the same proportion but very different information content.
+
+At the phylogenetic and genomic level, we would want a dated phylogeny, posterior trees rather than a single tree, genetic distances among species pairs, expression data for reproductive tissues, annotations for pollen/pistil/ovule genes, tests for positive selection, signatures of selective sweeps, gene family expansion or loss, copy-number variation, structural variation, and regulatory divergence.
+
+The ideal empirical model would separate at least three responses:
+\begin{equation}
+R^{\mathrm{tube}}, \quad R^{\mathrm{seed}}, \quad R^{\mathrm{F1}}.
+\end{equation}
+That matters because pollen-tube failure, seed failure, and hybrid sterility need not have the same causal basis.
+
+\section{How to deal with missing data}
+
+The most important missing variable is pollen load. It should be handled transparently. The first strategy is to use pollen production and an unknown effective deposition fraction:
+\begin{equation}
+\Peff{}_{i}=\psi A_i.
+\end{equation}
+Then vary \(\psi\) over a wide range, for example
+\begin{equation}
+\psi \in \{0.001,0.003,0.01,0.02,0.05,0.10\}.
+\end{equation}
+The central question becomes whether the qualitative predictions survive across this range. If the model only works when \(\psi=0.02\), it is fragile. If it works across a broad range, the absence of direct pollen-load data is less damaging.
+
+The second strategy is to use the scaling model:
+\begin{equation}
+\Peff{}_{i}=cO_i^\alpha.
+\end{equation}
+Then vary
+\begin{equation}
+\alpha \in \{0.25,0.50,0.75,1.00,1.25\}.
+\end{equation}
+This gives a clean falsifiability structure. If \(\alpha<1\), few-ovule lineages should have stronger pollen competition. If \(\alpha=1\), ovule number should not matter much. If \(\alpha>1\), the prediction reverses.
+
+The third strategy is Bayesian latent-variable modelling. Treat \(K_i\) as an unobserved lineage trait:
+\begin{equation}
+\log K_i = \mu_K + (\alpha-1)\log O_i + u_i + \epsilon_i,
+\label{eq:latent_K}
+\end{equation}
+where \(u_i\) is a phylogenetic random effect and \(\epsilon_i\) is lineage-specific residual variation. This allows uncertainty in \(K_i\) to propagate into uncertainty in the RI prediction.
+
+The fourth strategy is to measure pollen load in a smaller independent calibration dataset. This would not need to reproduce a full historical dataset. Even a carefully designed subset across the ovule-number range could estimate whether \(\alpha<1\), whether pollen deposition is overdispersed, and whether \(\psi\) varies systematically with floral morphology.
+
+The fifth strategy is to analyse reciprocal asymmetry directly. Even without pollen-load data, the strongest test is
+\begin{equation}
+A_{ij}\sim \log O_j-\log O_i,
+\end{equation}
+because under \(\alpha<1\), \(K_i>K_j\) when \(O_i<O_j\). This is weaker than using \(K\), but still informative if stated carefully.
+
+For missing raw counts, use the most denominator-aware model available. If seed counts and ovule counts are available, use a binomial or beta-binomial model:
+\begin{equation}
+Y_{i\leftarrow j}\sim \operatorname{BetaBinomial}(N_{i\leftarrow j},p_{i\leftarrow j},\theta),
+\end{equation}
+where \(Y_{i\leftarrow j}\) is successful seed number and \(N_{i\leftarrow j}\) is the number of ovules exposed in the cross. If only proportions are available, use beta regression or zero-one inflated beta regression, but treat that as a second-best analysis.
+
+For missing reciprocal crosses, avoid strong claims about asymmetry. A dataset without reciprocals can test whether few-ovule lineages tend to show stronger RI overall, but it cannot cleanly test the maternal-filter prediction.
+
+For missing or uncertain phylogenies, use a posterior distribution of trees where possible. If only a taxonomic tree is available, the analysis can still be publishable as a sensitivity exercise, but it should be described as provisional. Pairwise RI data are statistically awkward because the same species appears in many pairs. Lineage-pair comparative methods were developed to address this non-independence more directly than simple node averaging or naive pairwise regression \citep{Anderson2024}.
+
+\section{Statistical model for empirical data}
+
+For raw prezygotic seed-count data, use
+\begin{equation}
+Y^{\mathrm{pre}}_{i\leftarrow j}\sim
+\operatorname{BetaBinomial}\left(N_{i\leftarrow j},p^{\mathrm{pre}}_{i\leftarrow j},\theta_{\mathrm{pre}}\right),
+\end{equation}
+where \(N_{i\leftarrow j}\) is the number of ovules exposed in the cross. A workable linear predictor is
+\begin{equation}
+\logit\left(p^{\mathrm{pre}}_{i\leftarrow j}\right)
+=
+\beta_0+
+\beta_K\log K_i+
+\beta_DG_{ij}+
+\beta_{KD}\log K_iG_{ij}+
+ a_i^{(M)}+a_j^{(P)}+a_{ij}^{(\mathrm{pair})}.
+\label{eq:empirical_pre_model}
+\end{equation}
+Here \(a_i^{(M)}\) is a maternal lineage random effect, \(a_j^{(P)}\) is a paternal lineage random effect, and \(a_{ij}^{(\mathrm{pair})}\) is a pair-level effect. The maternal and paternal random effects should ideally have phylogenetic covariance.
+
+For the core asymmetry prediction, use reciprocal differences:
+\begin{equation}
+A_{ij}=\Rpre_{i\leftarrow j}-\Rpre_{j\leftarrow i}.
+\end{equation}
+Then fit
+\begin{equation}
+A_{ij}=\beta_0+\beta_{\Delta K}(\log K_i-\log K_j)+\beta_GG_{ij}+\epsilon_{ij}.
+\label{eq:asymmetry_model_K}
+\end{equation}
+The expected result is
+\begin{equation}
+\beta_{\Delta K}>0.
+\end{equation}
+If \(K\) is unavailable and ovule number is used as a proxy under \(\alpha<1\), then
+\begin{equation}
+A_{ij}=\beta_0+\beta_{\Delta O}(\log O_j-\log O_i)+\beta_GG_{ij}+\epsilon_{ij},
+\label{eq:asymmetry_model_O}
+\end{equation}
+with
+\begin{equation}
+\beta_{\Delta O}>0.
+\end{equation}
+
+For postzygotic isolation,
+\begin{equation}
+Y^{\mathrm{post}}_{ij}\sim \operatorname{Binomial}(N^{\mathrm{post}}_{ij},p^{\mathrm{post}}_{ij}),
+\end{equation}
+and
+\begin{equation}
+\logit\left(p^{\mathrm{post}}_{ij}\right)
+=
+\gamma_0+\gamma_GG_{ij}+\gamma_K|\log K_i-\log K_j|+u_{ij}.
+\label{eq:empirical_post_model}
+\end{equation}
+The expectation is that \(\gamma_G\) should be stronger than \(\gamma_K\), or at least that the postzygotic model should be less strongly directional than the prezygotic model.
+
+\section{Simulation protocol in a phylogenetic framework}
+
+The simulation should have two purposes. First, it should explore the mathematical model under controlled conditions. Second, it should tell us which empirical datasets are strong enough to test the model and which ones can only provide suggestive evidence.
+
+The proposed simulation has six layers.
+
+\subsection{Layer 1: simulate phylogenies}
+
+Generate phylogenies with different numbers of tips,
+\begin{equation}
+n\in\{30,60,120,240\},
+\end{equation}
+and vary tree shape from balanced to imbalanced. Tree shape matters because a model can look strong when high-\(K\) lineages are clustered in one clade but fail when independent transitions are few. Use many replicate trees per scenario.
+
+\subsection{Layer 2: simulate ovule number}
+
+Let
+\begin{equation}
+x_i=\log O_i.
+\end{equation}
+Simulate \(x_i\) under three models. The simplest is Brownian motion,
+\begin{equation}
+dx_i=\sigma_OdW_t.
+\end{equation}
+A more stabilising model is an Ornstein--Uhlenbeck process,
+\begin{equation}
+dx_i=\eta_O(\theta_O-x_i)dt+\sigma_OdW_t.
+\end{equation}
+The most biologically useful model is a state-transition model where lineages switch between many-ovule and few-ovule regimes:
+\begin{equation}
+S_i(t)\in\{\mathrm{many},\mathrm{few}\},
+\end{equation}
+with transition rates
+\begin{equation}
+q_{\mathrm{many}\rightarrow\mathrm{few}},\quad q_{\mathrm{few}\rightarrow\mathrm{many}}.
+\end{equation}
+Then simulate ovule number around state-specific optima:
+\begin{equation}
+x_i\sim \Normal(\theta_{S_i},\sigma_S^2).
+\end{equation}
+The state-transition model is closest to the biological question because it allows independent transitions into few-ovule states.
+
+\subsection{Layer 3: simulate pollen load and competition}
+
+For each tip \(i\), simulate effective pollen load using either the production model
+\begin{equation}
+P_i=\psi_iA_i
+\end{equation}
+or the scaling model
+\begin{equation}
+P_i=cO_i^\alpha e^{\epsilon_i},
+\quad
+\epsilon_i\sim \Normal(0,\sigma_P^2).
+\end{equation}
+Then compute
+\begin{equation}
+K_i=\frac{P_i}{O_i}.
+\end{equation}
+Vary
+\begin{equation}
+\alpha\in\{0.25,0.50,0.75,1.00,1.25\}
+\end{equation}
+and
+\begin{equation}
+\psi\in\{0.001,0.003,0.01,0.02,0.05,0.10\}.
+\end{equation}
+This immediately tells us whether the theory depends more on the deposition fraction or on the scaling exponent \(\alpha\).
+
+\subsection{Layer 4: simulate pollen performance, maternal filtering, and mismatch}
+
+For each lineage, define the evolved maternal filter as
+\begin{equation}
+F_i=F^*(K_i)+\epsilon_{F,i},
+\end{equation}
+where \(F^*(K_i)\) comes from the maternal fitness model and \(\epsilon_{F,i}\) is phylogenetic or lineage-specific residual variation.
+
+Now simulate pollen--pistil mismatch between lineages. In the independent architecture,
+\begin{equation}
+D_{ij}=D_{ij}^{\mathrm{drift}}+D_{ij}^{\mathrm{selection}},
+\end{equation}
+where \(D_{ij}^{\mathrm{selection}}\) is weakly related to \(K\). In the linked architecture,
+\begin{equation}
+D_{ij}=D_{ij}^{\mathrm{drift}}+\sum_\ell d_\ell H(r_\ell,s_\ell)I[\ell\text{ differs between }i\text{ and }j].
+\end{equation}
+In the pleiotropic architecture,
+\begin{equation}
+D_{ij}=D_{ij}^{\mathrm{drift}}+\sum_\ell d_\ell I[\ell\text{ differs between }i\text{ and }j],
+\end{equation}
+where alleles with large pollen-performance effects also tend to have nonzero compatibility effects.
+
+\subsection{Layer 5: simulate reproductive isolation}
+
+For every selected pair \(i,j\), simulate prezygotic RI:
+\begin{equation}
+\Rpre_{i\leftarrow j}=1-e^{-F_iD_{ij}}.
+\end{equation}
+Simulate reciprocal asymmetry:
+\begin{equation}
+A_{ij}=\Rpre_{i\leftarrow j}-\Rpre_{j\leftarrow i}.
+\end{equation}
+Simulate postzygotic RI separately:
+\begin{equation}
+B_{ij}\sim\operatorname{Poisson}(\lambda_BT_{ij}^{\gamma}),
+\end{equation}
+\begin{equation}
+\Rpost_{ij}=1-e^{-hB_{ij}}.
+\end{equation}
+Then generate observed data with sampling error. For seed set,
+\begin{equation}
+Y^{\mathrm{pre}}_{i\leftarrow j}\sim
+\operatorname{BetaBinomial}\left(N_{i\leftarrow j},1-\Rpre_{i\leftarrow j},\theta\right).
+\end{equation}
+For F1 fertility or viability,
+\begin{equation}
+Y^{\mathrm{post}}_{ij}\sim
+\operatorname{Binomial}\left(N^{\mathrm{post}}_{ij},1-\Rpost_{ij}\right).
+\end{equation}
+
+\subsection{Layer 6: impose realistic data structures}
+
+The simulation becomes useful for the empirical project when we impose incomplete data. Dense reciprocal data contain all pairs crossed in both directions, with raw seed counts, ovule counts, and postzygotic data. Sparse reciprocal data contain only selected species pairs, but each pair has raw counts. Phylogenetically independent pairs reduce non-independence, but may discard information and reduce power. One-direction-only crosses can test overall association between ovule number and RI, but cannot cleanly test maternal asymmetry. Summary RI proportions can be publishable, but denominator information is lost. Family-level state data can test macroevolutionary convergence, but cannot identify the crossing mechanism unless reciprocal RI data are also present.
+
+\section{Worst-to-best publishable scenarios}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.16\textwidth} >{\raggedright\arraybackslash}p{0.24\textwidth} >{\raggedright\arraybackslash}p{0.23\textwidth} >{\raggedright\arraybackslash}p{0.18\textwidth} >{\raggedright\arraybackslash}p{0.14\textwidth}}
+\caption{Empirical scenarios ordered from weakest to strongest within the realm of publishable evidence.}\\
+\toprule
+Scenario & Data available & What can be claimed & Main limitation & Best repair \\
+\midrule
+\endfirsthead
+\toprule
+Scenario & Data available & What can be claimed & Main limitation & Best repair \\
+\midrule
+\endhead
+Worst publishable & Ovule number, summary RI, rough phylogeny, no pollen load, few reciprocals & A theory-driven association between ovule state and RI & Cannot estimate \(K\); weak asymmetry test & Present as theory plus sensitivity, not decisive proof \\
+Minimal comparative & Ovule number, pollen production, genetic distance, reciprocal RI for some pairs & Few-ovule or inferred high-\(K\) lineages show stronger maternal RI & Pollen load inferred & Use broad \(\psi\) and \(\alpha\) sensitivity \\
+Solid comparative & Raw cross counts, ovule denominators, reciprocal crosses, postzygotic data, dated tree & Prezygotic and postzygotic barriers are decoupled as predicted & Direct \(\Peff\) may still be missing & Add latent \(K\) model and posterior tree sensitivity \\
+Strong mechanistic & Adds pollen-tube data, pollen germination, pollen production, stigma/style traits & Identifies where the barrier acts: stigma, style, ovary, ovule, or seed set & Natural pollen load may still be uncertain & Add field pollen-load calibration across ovule classes \\
+Best empirical & Natural pollen load, donor diversity, timing, experimental pollen-load manipulation, reciprocal crosses, genomic data & Tests the causal chain \(O\rightarrow K\rightarrow\) competition \(\rightarrow F\rightarrow\) RI & Still comparative and phylogenetically structured & Combine manipulation with phylogenetic mixed models \\
+\bottomrule
+\end{longtable}
+
+\section{Phylogenetic limitations and empirical repair}
+
+The main phylogenetic risk is that ovule number is clade-structured. If all few-ovule species belong to one family and all many-ovule species belong to another, then the model cannot separate ovule state from family history. In that case, a significant association between ovule number and RI may simply reflect unmeasured clade-level biology.
+
+The second risk is that there are too few independent transitions. A model with 100 species but only two transitions into few-ovule states is weaker than a model with 40 species and ten independent transitions. The relevant unit is not only species number, but the number and distribution of transitions into high-\(K\) states.
+
+The third risk is pseudo-replication through species pairs. If one species appears in many crosses, those crosses are not independent. This is why pairwise phylogenetic modelling is important. The fourth risk is that genetic distance and ovule-state difference are correlated. If few-ovule and many-ovule species are also more genetically distant, then maternal \(K\) and divergence time can be confounded. Reciprocal asymmetry helps because genetic distance is symmetric, while maternal filtering is directional.
+
+The strongest empirical design therefore prioritises reciprocal crosses across multiple independent transitions in ovule number. The most diagnostic response is not merely \(R_{ij}\), but
+\begin{equation}
+A_{ij}=R_{i\leftarrow j}-R_{j\leftarrow i}.
+\end{equation}
+This removes much of the symmetric genetic-distance effect and focuses directly on the maternal asymmetry predicted by the model.
+
+\section{Practical simulation outputs}
+
+For each simulation, record the lineage-level quantities \(K_i\), \(\Omega_i\), and \(F_i\), and the pair-level quantities \(D_{ij}\), \(\Rpre_{i\leftarrow j}\), \(A_{ij}\), and \(\Rpost_{ij}\). Also record genomic summaries, including the number of sweeps, mean sweep strength, the fraction of sweeps affecting compatibility, and the fraction of compatibility alleles hitchhiking with pollen-performance sweeps.
+
+Then evaluate recovery using the sign and bias of \(\hat{\beta}_{\Delta K}\), the probability that \(\hat{\beta}_{\Delta K}>0\), power, false positive rate, posterior coverage if Bayesian models are used, and the misclassification rate of high-\(K\) states. These summaries tell us when the model is empirically recoverable and when the available data are too weak.
+
+\section{Concise conceptual statement}
+
+The whole framework can be summarised as
+\begin{equation}
+O \rightarrow K=\frac{\Peff}{O} \rightarrow S_z(K) \rightarrow \text{pollen-performance evolution} \rightarrow F^*(K) \rightarrow \Rpre.
+\end{equation}
+Under sublinear pollen-load scaling,
+\begin{equation}
+\Peff=cO^\alpha, \quad \alpha<1,
+\end{equation}
+so
+\begin{equation}
+K=cO^{\alpha-1}
+\end{equation}
+declines with ovule number. Few-ovule lineages therefore experience stronger pollen competition. Stronger pollen competition increases selection on pollen performance and favours stricter maternal filtering. When these traits diverge among lineages, prezygotic reproductive isolation arises as a passenger of the current reproductive state. The clearest empirical signature is directional: reproductive isolation should be stronger when the high-\(K\), few-ovule lineage is the maternal parent. Postzygotic reproductive isolation should instead track genetic distance or divergence time more closely.
+
+\section*{Immediate next steps}
+
+The first simulation should ignore phylogeny and test two lineages differing only in \(O\), \(\Peff\), and \(K\). The second should add maternal filters and reciprocal crosses. The third should embed the process in a phylogeny and deliberately damage the data by removing pollen loads, denominators, reciprocal crosses, or independent transitions. Only after those exercises should the empirical datasets be analysed, because the simulations will reveal which claims are defensible under each data structure.
+
+
+\begin{thebibliography}{99}
+
+\bibitem[Anderson et~al.(2024)]{Anderson2024}
+Anderson, S. A. S. et~al. (2024).
+\newblock The comparative analysis of lineage-pair traits.
+\newblock \emph{Methods in Ecology and Evolution}.
+
+\bibitem[Baack et~al.(2015)]{Baack2015}
+Baack, E., Melo, M. C., Rieseberg, L. H., and Ortiz-Barrientos, D. (2015).
+\newblock The origins of reproductive isolation in plants.
+\newblock \emph{New Phytologist}, 207(4), 968--984.
+
+\bibitem[Christie et~al.(2022)]{Christie2022}
+Christie, K. et~al. (2022).
+\newblock The strength of reproductive isolating barriers in seed plants.
+\newblock \emph{Evolution}, 76(10), 2228--2243.
+
+\bibitem[Fitzpatrick(2002)]{Fitzpatrick2002}
+Fitzpatrick, B. M. (2002).
+\newblock Molecular correlates of reproductive isolation.
+\newblock \emph{Evolution}, 56(1), 191--198.
+
+\bibitem[Lankinen(2016)]{Lankinen2016}
+Lankinen, A. (2016).
+\newblock Differential selection on pollen and pistil traits in relation to pollen competition and sexual conflict.
+\newblock \emph{AoB PLANTS}, 8, plw061.
+
+\bibitem[Lankinen and Green(2015)]{LankinenGreen2015}
+Lankinen, A. and Green, K. K. (2015).
+\newblock Using theories of sexual selection and sexual conflict to improve our understanding of plant ecology and evolution.
+\newblock \emph{AoB PLANTS}, 7, plv008.
+
+\bibitem[Lora et~al.(2016)]{Lora2016}
+Lora, J., Hormaza, J. I., and Herrero, M. (2016).
+\newblock The diversity of the pollen tube pathway in plants: toward an increasing control by the sporophyte.
+\newblock \emph{Frontiers in Plant Science}, 7, 107.
+
+\bibitem[Lowry et~al.(2008)]{Lowry2008}
+Lowry, D. B., Modliszewski, J. L., Wright, K. M., Wu, C. A., and Willis, J. H. (2008).
+\newblock The strength and genetic basis of reproductive isolating barriers in flowering plants.
+\newblock \emph{Philosophical Transactions of the Royal Society B}, 363(1506), 3009--3021.
+
+\bibitem[Moyle et~al.(2004)]{Moyle2004}
+Moyle, L. C., Olson, M. S., and Tiffin, P. (2004).
+\newblock Patterns of reproductive isolation in three angiosperm genera.
+\newblock \emph{Evolution}, 58(6), 1195--1208.
+
+\bibitem[Scopece et~al.(2007)]{Scopece2007}
+Scopece, G., Musacchio, A., Widmer, A., and Cozzolino, S. (2007).
+\newblock Patterns of reproductive isolation in Mediterranean deceptive orchids.
+\newblock \emph{Evolution}, 61(11), 2623--2642.
+
+\bibitem[Wang et~al.(2023)]{Wang2023}
+Wang, L., Geng, A., and Johnson, M. A. (2023).
+\newblock Mechanisms of prezygotic post-pollination reproductive barriers in flowering plants.
+\newblock \emph{Frontiers in Plant Science}, 14, 1230278.
+
+\end{thebibliography}
+
+\end{document}

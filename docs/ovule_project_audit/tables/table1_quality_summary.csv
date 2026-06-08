@@ -1,0 +1,9 @@
+quantity,count,comment
+All pair rows,578,Before applying remove flag
+Retained pair rows,560,remove == no
+Rows flagged for removal,18,Duplicates or lower-quality alternatives
+Rows with PI_name,141,Available proxy for PI flag
+Retained PI rows,133,remove == no and PI_name present
+Unique PI names retained,133,Should map to phylogeny tips
+Negative RI values,59,Interspecific performance can exceed intraspecific baseline
+RI values equal to 1,143,Boundary values affect beta regression

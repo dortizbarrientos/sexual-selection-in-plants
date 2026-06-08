@@ -1,0 +1,6 @@
+dataset,role,rows,columns,families,genera,unique_species
+Table1_2026_01_09.csv,Pairwise cross outcomes and RI,578,15.0,50.0,93.0,410
+Table2_2025_12_15.csv,"Curated ovule, life-history, and mating-system covariates",408,6.0,,94.0,408
+Table2b_2025_11_25.csv,Ovule-number master table before final curation,5496,7.0,309.0,1840.0,3789
+Genetic_distances_results.csv,K2P genetic distances for PI species pairs,141,3.0,,,266
+All_PI_pairs_Zuntini_2025_10.tre,Phylogeny over PI-pair labels,134,,,,133
