@@ -1,0 +1,34 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# --- R ---
+.Rhistory
+.RData
+.Rproj.user/
+
+# --- LaTeX build artifacts ---
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.bbl
+*.blg
+
+# --- Simulation outputs (regenerable; keep only a small demo) ---
+simulation/results/*
+!simulation/results/.gitkeep
+!simulation/results/demo/
+
+# --- Derived data (regenerable from data/raw/) ---
+data/processed/*
+!data/processed/.gitkeep
+
+# --- OS ---
+.DS_Store

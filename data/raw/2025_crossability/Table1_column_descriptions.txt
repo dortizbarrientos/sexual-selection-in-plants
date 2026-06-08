@@ -1,0 +1,17 @@
+Column Name	Description
+family	The family of the species being compared
+genus	The genus of the species being compared
+species1	The first species in the comparison
+species2	The second species in the comparison
+duplicate	Indicator for whether the row is a duplicate entry (yes1 = regular duplicate (measured twice);  yes2 = duplicate with two different types of data)
+remove	For duplicates which row to remove, keep the better data (based on measure, data completeness, and more recent papers)
+PI	Whether the pair is strickly phylogenetically independent (chose pair with best data when there are options; priority = most closely related, best ovule number data, best genetic distance data)
+PI_name	Names for PI pairs
+intraspecific_value_sp1	Success of species 1 intraspecific crosses
+intraspecific_value_sp2	Success of species 2 intraspecific crosses
+interspecific_value_sp1_sp2	Success of species 1 (mom) by species 2 (dad) interspecific crosses
+interspecific_value_sp2_sp1	Success of species 1 (mom) by species 2 (dad) interspecific crosses
+sp1_hybrid_proportion	Proportion of hybrids after mixed pollination of species 1
+sp2_hybrid_proportion	Proportion of hybrids after mixed pollination of species 2
+RI	Reproductive isolation index between species 1 and species 2
+measure	Type of data used to generate RI value (fruit set = measures that don't count the number of seeds; seed set = number of seed produced per pollination (included failed crosses); seed number = number of seeds produced per fruit (failed crosses not counted))

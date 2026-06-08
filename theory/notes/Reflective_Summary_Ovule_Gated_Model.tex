@@ -1,0 +1,31 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{parskip}
+
+\title{Reflective Summary: The Ovule-Gated Pollen Competition Model}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Introduction and Core Concept}
+I have been developing an ovule-gated model of pollen competition to explain how post-pollination prezygotic reproductive isolation (RI) evolves in flowering plants. My central proposition is that RI does not merely accumulate as a passive, clock-like function of genetic distance. Instead, prezygotic RI can emerge rapidly as a state-dependent ``passenger'' of the reproductive arena.
+
+\section*{The Mechanistic Engine}
+The mechanistic hinge of my framework is the competition ratio $K = P_{eff}/O$, where $P_{eff}$ is the effective pollen load and $O$ is the number of ovules per ovary. When $K \le 1$, competition is weak. However, when $K > 1$, more pollen grains compete than there are available ovules, transitioning the lineage into a regime of intense pollen competition. Assuming that effective pollen load scales sublinearly with ovule number ($P_{eff} = cO^\alpha$ with $\alpha < 1$), this implies that lineages with fewer ovules naturally experience a higher opportunity for pollen competition.
+
+In this high-$K$ state, successful pollen grains represent the extreme upper tail of competitive performance. This drives recurrent selective sweeps on pollen traits. Concurrently, because surplus pollen is available, the maternal plant can afford to evolve stricter filtering mechanisms ($F$) without suffering severe seed-set penalties.
+
+\section*{Predictions on Reproductive Isolation}
+This dynamic directly generates my key testable prediction regarding directional asymmetry in prezygotic RI. If a few-ovule (high-$K$) lineage crosses with a many-ovule (low-$K$) lineage, the cross should fail more strongly when the high-$K$ species is the maternal parent. This is because its strict maternal filter rejects mismatched or heterospecific pollen, whereas the low-$K$ species remains permissive to avoid unfertilised ovules. In contrast, I expect postzygotic barriers (like Dobzhansky-Muller incompatibilities) to act symmetrically and track genetic divergence time more closely than maternal state.
+
+\section*{Methodological Approach and Missing Data}
+A practical challenge I face is the absence of direct pollen-load data due to a falling out with a former colleague's student. Rather than letting this derail the theory, I will treat the missing data as a calibration problem. By modeling the effective deposition fraction ($\psi$) and the allometric scaling exponent ($\alpha$) as latent variables in sensitivity analyses, I can evaluate whether the model's predictions hold across biologically plausible ranges. The model becomes robust if the high competition in few-ovule lineages persists as long as $\alpha < 1$.
+
+\section*{Next Steps: Simulations}
+To solidify this framework, my next step is to run simulations across three layers. First, I will establish the ecological competition engine (varying $\psi$ and $\alpha$). Second, I will introduce evolving maternal filters and measure reciprocal crosses in silico under different genetic architectures (independent, linked, and pleiotropic). Finally, I will impose realistic missing-data structures on simulated phylogenetic trees to determine what empirical datasets---from sparse reciprocal counts to dense genomic panels---are necessary to confidently recover the causal chain.
+\end{document}

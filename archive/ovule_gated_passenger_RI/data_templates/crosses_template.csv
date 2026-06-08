@@ -1,0 +1,3 @@
+maternal_species,paternal_species,n_flowers_crossed,ovules_exposed,seeds_matured,fruit_set,pollen_dose,pollen_tubes_reached_ovary,F1_n,F1_viable,F1_fertile,genetic_distance,notes
+Species_A,Species_B,20,500,100,0.8,standardized,,,,,0.05,reciprocal direction 1
+Species_B,Species_A,20,4000,3200,0.9,standardized,,,,,0.05,reciprocal direction 2
