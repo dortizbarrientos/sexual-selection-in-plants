@@ -1,6 +1,0 @@
-Column names	Column description
-species	The genus of the species being compared
-ovule_number	Best estimate of ovule number for the species
-confidence	Confidence in ovule number estimate based on the following categories: 1 = specific ovule number, 2 = ovule number from a very small range, 3 = specific seed numbers or range of ovules for genus, 4 = some species in other list, 5 = no data
-life_history	Life history category of the species with 3 levels: annual, perennial, woody
-mating_system	Mating system category of the species with 3 levels: outcrossing, selfing, mixed-mating
