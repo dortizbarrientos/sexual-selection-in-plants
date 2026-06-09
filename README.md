@@ -1,4 +1,4 @@
-# sexual-selection-in-plants
+# Sexual selection as a neglected driver of reproductive isolation across the flowering plants.
 
 An ovule-gated model of pollen competition and the evolution of post-pollination
 prezygotic reproductive isolation (RI) in flowering plants — **theory, simulation, and
