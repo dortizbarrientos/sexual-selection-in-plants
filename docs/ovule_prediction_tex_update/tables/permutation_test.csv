@@ -1,0 +1,2 @@
+test,n_permutations,observed_slope_family_measure_residualized,null_mean,null_sd,p_one_sided_positive,null_slope_quantile_025,null_slope_quantile_500,null_slope_quantile_975
+family_stratified_ovule_permutation,999,0.009951187837352285,0.00092764360062388,0.037441340631546305,0.393,-0.07112612980082472,-0.001399491345912918,0.07304331270303077

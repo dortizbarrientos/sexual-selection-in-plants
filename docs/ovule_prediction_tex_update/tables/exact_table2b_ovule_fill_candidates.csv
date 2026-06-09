@@ -1,0 +1,3 @@
+genus,species,species_key,ovule_number,confidence,life_history,mating_system,ovule_number_filled,ovule_source,filled_from_table2b,table2b_candidate_count,table2b_number_mean,table2b_number_min,table2b_number_max
+Ipomopsis,Ipomopsis tenuituba,ipomopsis tenuituba,,4,perennial,outcrossing,,missing,False,1.0,21.5,21.5,21.5
+Leptosiphon,Leptosiphon nuttallii,leptosiphon nuttallii,,5,perennial,mixed-mating,,missing,False,1.0,8.7,8.7,8.7

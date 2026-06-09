@@ -1,0 +1,187 @@
+\section{Proper statistical analysis of the prediction}
+
+The empirical test should follow the direction of the biology. A broad regression of total RI on ovule number is too blunt because the model is maternal and reciprocal. The proper test asks whether the same species pair fails more strongly in the direction where the maternal parent has fewer ovules.
+
+\subsection{Keep the sign convention fixed}
+
+For species pair $(1,2)$, define
+\begin{equation}
+A^{SC}_{12}=R^{SC}_{1\leftarrow 2}-R^{SC}_{2\leftarrow 1},
+\label{eq:analysis-A-SC}
+\end{equation}
+and
+\begin{equation}
+\Delta\log O_{12}=\log(O_2)-\log(O_1).
+\label{eq:analysis-dlogO}
+\end{equation}
+This convention is useful because it makes the prediction positive. If species 1 has fewer ovules than species 2, then $O_1<O_2$ and $\Delta\log O_{12}>0$. The model says species 1 should then have the stricter maternal filter. Therefore $R^{SC}_{1\leftarrow 2}>R^{SC}_{2\leftarrow 1}$ and $A^{SC}_{12}>0$.
+
+The first test is therefore
+\begin{equation}
+A^{SC}_{12}=\beta_0+\beta_O\Delta\log O_{12}+\epsilon_{12},
+\label{eq:first-plain-analysis}
+\end{equation}
+with
+\begin{equation}
+\boxed{\beta_O>0.}
+\end{equation}
+
+\begin{conclusionbox}
+The sign convention is not cosmetic. It is a logic check. A positive coefficient means that the fewer-ovule maternal direction has the stronger prezygotic barrier.
+\end{conclusionbox}
+
+\subsection{The main model should be paired and family-aware}
+
+The broad model in \eqref{eq:first-plain-analysis} is only a diagnostic. The main model should recognise four features of the data: families differ, species are reused across pairwise comparisons, measurement type differs, and ovule-number confidence varies.
+
+A practical hierarchical model is
+\begin{equation}
+A^{SC}_{ij}\sim t_{\nu}(\mu_{ij},\sigma),
+\label{eq:t-main-analysis}
+\end{equation}
+where
+\begin{align}
+\mu_{ij}={}&\beta_0+
+\beta_O\Delta\log O_{ij}
++\gamma_{m[ij]}
++\eta_q q_{ij}
++a_{f[ij]}
++b_{f[ij]}\Delta\log O_{ij}
++u_i-u_j .
+\label{eq:main-analysis-mu}
+\end{align}
+Here $m[ij]$ is measurement type, $q_{ij}$ is an ovule-confidence or ovule-provenance term, $f[ij]$ is family, and $u_i-u_j$ represents repeated species effects. The family effects are partially pooled:
+\begin{align}
+a_f&\sim N(0,\sigma_a^2),\\
+b_f&\sim N(0,\sigma_b^2).
+\end{align}
+The family-specific ovule slopes are
+\begin{equation}
+\beta_{O,f}=\beta_O+b_f.
+\end{equation}
+The important questions are then
+\begin{align}
+\Pr(\beta_O>0\mid \mathrm{data}),
+\end{align}
+and, for each family,
+\begin{align}
+\Pr(\beta_{O,f}>0\mid \mathrm{data}).
+\end{align}
+
+\begin{cautionbox}
+The family analysis should use partial pooling. Separate fixed-effect slopes for every family are descriptive, not the main inference, because many families have too few pairs or too little ovule contrast.
+\end{cautionbox}
+
+\subsection{Use the divergence-scaled model as a strict sensitivity analysis}
+
+The theory predicts that asymmetry needs both a maternal-filter contrast and mismatch. If K2P distance is available, fit
+\begin{equation}
+A^{SC}_{ij}=\beta_0+\beta_O\Delta\log O_{ij}+\beta_GG_{ij}+\beta_{GO}G_{ij}\Delta\log O_{ij}+\epsilon_{ij}.
+\label{eq:strict-G-analysis}
+\end{equation}
+The most mechanistic prediction is
+\begin{equation}
+\boxed{\beta_{GO}>0.}
+\end{equation}
+This subset is smaller than the full reciprocal dataset, so it should not replace the broad reciprocal test. Instead it asks whether the directional ovule effect strengthens with genetic distance.
+
+\subsection{The long-form paired model is the same test}
+
+The same analysis can be written with two rows per species pair:
+\begin{equation}
+R^{SC}_{i\leftarrow j}=\alpha_{ij}+\beta_M[-\log(O_i)]+\varepsilon_{i\leftarrow j}.
+\label{eq:long-pair-analysis}
+\end{equation}
+The pair effect $\alpha_{ij}$ absorbs everything symmetric about the pair: genetic distance, general compatibility, study effects, and pair-level fecundity. With two reciprocal directions, this model is algebraically equivalent to a paired difference model using $A^{SC}_{ij}$ and $\Delta\log O_{ij}$. It is a useful check because it makes the maternal nature of the prediction explicit.
+
+\subsection{Raw counts would be better than summary RI}
+
+If the original studies provide denominators, the preferred model should use counts rather than RI summaries. For directed cross $i\leftarrow j$, write
+\begin{equation}
+Y_{i\leftarrow j}\sim \mathrm{BetaBinomial}(N_{i\leftarrow j},p_{i\leftarrow j},\phi),
+\label{eq:raw-count-analysis}
+\end{equation}
+where $N_{i\leftarrow j}$ is the relevant denominator and $Y_{i\leftarrow j}$ is the number of successes. The denominator must match the measurement: pollinations, flowers, fruits, ovules, or seeds. A directed count model is
+\begin{equation}
+\logit(p_{i\leftarrow j})=\alpha_{ij}
++\beta_M[-\log(O_i)]
++\beta_{GM}G_{ij}[-\log(O_i)]
++\gamma_{m[ij]}+u_i^{(M)}+u_j^{(P)}.
+\label{eq:raw-count-regression}
+\end{equation}
+This would be the strongest version of the analysis because it keeps denominator information instead of compressing it into a single index.
+
+\subsection{Separate the ovule model from unilateral incompatibility}
+
+Mating system is useful but not enough. Selfing, mixed mating, and outcrossing do not map perfectly onto self-incompatibility status. If SI status can be coded, the discriminating model should be
+\begin{equation}
+A^{SC}_{ij}=\beta_0+\beta_O\Delta\log O_{ij}
++\beta_{GO}G_{ij}\Delta\log O_{ij}
++\beta_{SI}\Delta SI_{ij}
++\beta_t\bar{t}_{ij}\Delta\log O_{ij}
++\gamma_{m[ij]}+\epsilon_{ij}.
+\label{eq:SI-discriminating-analysis}
+\end{equation}
+The ovule-gated model predicts positive $\beta_O$ or $\beta_{GO}$. The unilateral-incompatibility model predicts that $\beta_{SI}$ should carry the direction.
+
+\begin{cautionbox}
+Do not treat the Table 2 mating-system category as SI status. It is a useful modifier of pollen-donor diversity, but SI requires a separate coding if we want to distinguish mechanisms.
+\end{cautionbox}
+
+\subsection{Phylogenetic and pairwise non-independence}
+
+Species-pair data reuse species. They also reuse clades. If $C$ is the species-level phylogenetic covariance matrix and $L$ is a contrast matrix with $+1$ for species 1 and $-1$ for species 2, then a pairwise phylogenetic covariance can be written as
+\begin{equation}
+V_{\mathrm{pair}}=LCL^{\top}.
+\label{eq:pairwise-phylo-covariance}
+\end{equation}
+A phylogenetic version of the asymmetry model is then
+\begin{equation}
+A\sim N(\mu,\sigma^2V_{\mathrm{pair}}+\sigma_e^2I).
+\label{eq:phylo-analysis}
+\end{equation}
+This is the right comparative structure for pairwise traits. The PI/K2P subset remains useful as a conservative check, but the pairwise covariance model is the better target when the tree is cleaned.
+
+\subsection{Diagnostics that should be reported}
+
+The paper should report seven diagnostics.
+
+\begin{enumerate}
+\item A raw quadrant plot of $A^{SC}_{ij}$ against $\Delta\log O_{ij}$.
+\item The broad reciprocal slope, the high-confidence ovule slope, and the strict PI/K2P interaction slope.
+\item Family-specific descriptive slopes, with the global conclusion based on partial pooling rather than fixed slopes for every family.
+\item Leave-one-family-out fits, especially removing Solanaceae and Fabaceae.
+\item A within-family permutation test that shuffles ovule numbers among species while keeping the cross network fixed.
+\item A negative-control summary for pairs with zero or nearly zero ovule contrast.
+\item A model including SI status once those data are curated.
+\end{enumerate}
+
+\subsection{Executable first-pass analysis}
+
+I wrote a Python script that builds the analysis table and runs the first diagnostic models. The script uses Table 1 for cross outcomes, Table 2 for ovule number, confidence, life history, and mating system, Table 2b for exact species-level ovule-fill auditing, and the K2P file for the strict divergence-scaled subset.
+
+The command is
+\begin{verbatim}
+python scripts/ovule_asymmetry_analysis.py \
+  --input-dir . \
+  --output-dir ovule_prediction_analysis_update \
+  --n-permutations 999
+\end{verbatim}
+The main output files are \verb|data/reciprocal_pair_level_SC.csv| and \verb|data/directional_pair_level_SC.csv|. The first has one row per species pair. The second has two rows per pair, one for each maternal direction.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.90\linewidth]{asymmetry_vs_signed_ovule_contrast.png}
+\caption{Raw reciprocal asymmetry against signed ovule contrast. The predicted signal is a positive association: points should tend to fall in the upper-right and lower-left quadrants. This figure is a diagnostic, not the final model.}
+\label{fig:raw-asymmetry-analysis-diagnostic}
+\end{figure}
+
+\input{tables/sign_checks.tex}
+
+\input{tables/first_pass_analysis_checks.tex}
+
+The first executable checks do not yet show a stable positive signal. The broad measure-adjusted slope is positive but small; the family-adjusted slope is also small; the high-confidence subset is negative; and the strict PI/K2P interaction is negative with a large standard error. The within-family permutation test gives a one-sided positive-tail value of about $0.39$ for the family-and-measure residualised slope. These results should be treated as a warning, not a failure of the project. They say that the current summary data do not give an immediate pooled signal. The next test should ask whether the prediction appears after better mechanism coding, especially SI status, raw denominators, pollen-competition stage, and phylogenetic covariance.
+
+\begin{conclusionbox}
+The current best test is clear even if the first-pass signal is weak: use reciprocal Sobel--Chen asymmetry as the response, signed ovule contrast as the directional predictor, family partial pooling, repeated-species or phylogenetic covariance, measurement-type effects, ovule-confidence sensitivity, and SI status as the key alternative mechanism.
+\end{conclusionbox}

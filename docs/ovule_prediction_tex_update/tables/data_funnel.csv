@@ -1,0 +1,10 @@
+condition,pair_rows,families,species
+All Table 1 rows,578,50,410
+Retained rows: remove == no,560,50,408
+Both reciprocal interspecific directions,396,46,307
+Directional Sobel-Chen RI possible,383,45,296
+Asymmetry model-ready: plus both ovule numbers,305,41,219
+Asymmetry-ready with nonzero ovule contrast,217,27,151
+High-confidence ovules: both confidence <= 2,213,31,147
+Strict PI/K2P asymmetry subset,63,35,126
+Strict PI/K2P plus confidence <= 2,42,27,84
