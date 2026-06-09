@@ -32,3 +32,16 @@ data/processed/*
 
 # --- OS ---
 .DS_Store
+
+# --- LaTeX (additional) ---
+*.nav
+*.snm
+*.vrb
+
+# --- Stray archives ---
+*.zip
+
+# --- Scratch / duplicate folders that have reappeared ---
+/simulation/src/files/
+/simulation/src/mathModel/
+/simulation/src/results_demo/
