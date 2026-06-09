@@ -1,0 +1,9 @@
+stage,pairs,families
+Retained pair rows,560,50
+Both reciprocal interspecific directions,396,46
+Directional RI possible: reciprocal + both intraspecific controls,383,45
+Asymmetry model ready: directional RI + both ovule numbers,305,41
+Asymmetry model ready with nonzero ovule difference,217,27
+High-confidence ovules only: confidence <= 2,213,31
+Strict PI/K2P asymmetry subset,63,35
+Strict PI/K2P + high-confidence ovules,42,27
